@@ -28,8 +28,9 @@ td {
   border:1px dotted darkslategray;
 }
 
-table {
+#tables {
   border: 2px dotted white;
+  display:inline-block;
 }
 
 #colorBox{

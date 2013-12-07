@@ -1,13 +1,17 @@
 var currentColor = 'white';
 
 for (var i=0; i<31; i++){
-  $('table').append('<tr></tr>');
+  $('#tables').append('<table><tbody><tr></tr></tbody></table>');
 }
 
 $('table > tbody > tr').each(function(){
   for (var i=0; i<31; i++){
     $(this).append('<td></td>');
   }
+});
+
+$('table:even').each(function(){
+  $(this).find('tbody').find('tr').prepend('<td style="width:5px, border:none"></td>');
 });
 
 $('li').each(function(){
