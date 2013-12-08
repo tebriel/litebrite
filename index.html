@@ -3,6 +3,7 @@
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
+     <script src="bower_components/d3/d3.min.js"></script>
   </head>
   <body ng-controller="LiteCtrl">
     <div>
@@ -18,7 +19,7 @@
             </li>
         </ul>
     </div>
-    <span id="tables">
+    <!-- <span id="tables">
         <table ng-repeat="row in liteGrid">
             <tbody>
                 <tr>
@@ -33,7 +34,8 @@
                 </tr>
             </tbody>
         </table>
-    </span>
+    </span>-->
+    <svg litebrite lb-Data="liteGrid"></svg>
     <p>LITE BRITE</p>
     <script language="javascript" type="text/javascript" src="js/litebrite.js"></script>
   </body>

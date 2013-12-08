@@ -56,6 +56,32 @@ class LiteCtrl
 
         return
 
+LiteBriteD3 = ->
+    restrict: 'A'
+    scope:
+        data: "=lbData"
+    link:
+        post: (scope, iElement, iAttrs) ->
+            console.log d3.merge scope.data
+            console.log iElement
+            grid = d3.select(iElement[0])
+                .attr("width", "600px")
+                .attr("height", "600px")
+                .append("g")
+            grid.selectAll('circle')
+                .data(d3.merge scope.data)
+                .enter()
+                .append('circle')
+                .attr('cx', (d, i) -> ((i % 41) * 10) + 2)
+                .attr('cy', (d, i) -> (Math.floor(i / 41) * 10) + 2)
+                .attr('fill', 'blue')
+                .attr('r', "10px")
+
+
+            return
+
+
 litebriteApp = angular.module 'litebriteApp', []
 litebriteApp
     .controller('LiteCtrl', ['$scope', LiteCtrl])
+    .directive('litebrite', [LiteBriteD3])
