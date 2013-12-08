@@ -1,11 +1,11 @@
 var currentColor = 'white';
 
-for (var i=0; i<31; i++){
+for (var i=0; i<41; i++){
   $('#tables').append('<table><tbody><tr></tr></tbody></table>');
 }
 
 $('table > tbody > tr').each(function(){
-  for (var i=0; i<31; i++){
+  for (var i=0; i<41; i++){
     $(this).append('<td></td>');
   }
 });
