@@ -12,7 +12,7 @@ class LiteCtrl
         'pink'
         'white'
     ]
-    MAX_SIZE = 31
+    MAX_SIZE = 41
 
     constructor: (@$scope) ->
         @$scope.currentColor = COLORS[COLORS.length - 1]

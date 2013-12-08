@@ -18,7 +18,6 @@ ul {
 
 td {
   background:black;
-  border: 1px solid black;
   width:10px;
   height:15px;
   border-radius:50%;
@@ -28,6 +27,10 @@ td {
 #tables {
   border: 2px dotted white;
   display:inline-block;
+}
+
+table {
+    border-spacing: 0;
 }
 
 #colorBox{
