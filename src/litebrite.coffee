@@ -10,71 +10,59 @@ COLORS = [
     'magenta'
     'pink'
     'white'
-    'reset'
 ]
-currentColor = COLORS[COLORS.length - 2]
+currentColor = COLORS[COLORS.length - 1]
 MAX_SIZE = 31
 
 
-for color in COLORS
-    $('#colorBox > ul').append "<li class=\"#{color}\"></li>"
+class LiteCtrl
+    constructor: (@$scope, @settings) ->
+        @$scope.colors = COLORS
+        @$scope.liteGrid = []
+        @$scope.settings = @settings
 
-$('li.reset').text 'RESET'
+        @$scope.setColor = @setColor
+        @$scope.reset = @reset
 
-for i in [0...MAX_SIZE]
-    $('#tables').append '<table><tbody><tr></tr></tbody></table>'
+        @$scope.lightClick = @lightClick
 
-$('table > tbody > tr').each ->
-    for i in [0...MAX_SIZE]
-        $(@).append '<td></td>'
+        for row in [0...MAX_SIZE]
+            @$scope.liteGrid[row] = []
+            for column in [0...MAX_SIZE]
+                @$scope.liteGrid[row][column] = @resetCell()
 
-    return
+        return
+    setColor: (color) =>
+        @settings.currentColor = color
 
-$('table:even').each ->
-    $(@).find('tbody')
-        .find('tr')
-        .prepend('<td style="width:5px, border:none"></td>')
-
-    return
-
-$('li').each ->
-    $(@).css "background", $(@).attr('class')
-    return
-
-
-$('li').click ->
-    currentColor = $(@).attr 'class'
-
-    return
-
-$('td').click ->
-    $(@).css background: currentColor, boxShadow: ''
-    if currentColor isnt 'black'
-        $(@).css 'box-shadow', 'inset white 0px -1px 7px 1px'
-        $(@).attr 'status', 'lit'
-
-    return
-
-reset = ->
-    $('td').each ->
-        $(@).css background: 'black', boxShadow: ''
-        $(@).attr 'status', ''
         return
 
-highLight = (elm) ->
-    if $(elm).attr('status') isnt 'lit'
-        $(elm).css 'background', currentColor
+    resetCell: (cell) ->
+        cell ?= {}
+        cell.color = 'black'
+        cell.boxShadow = ''
+        cell.isLit = false
 
-    return
+        return cell
 
-lowLight = (elm) ->
-    if $(elm).attr('status') isnt 'lit'
-        $(elm).css 'background', 'black'
+    reset: =>
+        for row in @$scope.liteGrid
+            for cell in row
+                @resetCell cell
 
-    return
+        return
 
-$('.reset').click ->
-    reset()
-    return
+    lightClick: (cell) =>
+        if cell.color is @settings.currentColor
+            cell.color = 'black'
+        else
+            cell.color = @settings.currentColor
 
-$('td').hover (-> highLight(@)), (-> lowLight(@))
+        cell.isLit = cell.color isnt 'black'
+
+        return
+
+litebriteApp = angular.module 'litebriteApp', []
+litebriteApp
+    .controller('LiteCtrl', ['$scope', 'settings', LiteCtrl])
+    .value('settings', currentColor:'white')

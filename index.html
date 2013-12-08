@@ -1,12 +1,38 @@
-<html>
+<html ng-app='litebriteApp'>
   <head>
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
   </head>
-  <body>
-    <div id="colorBox"><ul></ul></div>
+  <body ng-controller="LiteCtrl">
+    <div>
+        <ul>
+            <li class='legend'
+                ng-repeat="color in colors"
+                ng-click="setColor(color)"
+                ng-class="color">
+            </li>
+            <li class='reset'
+                ng-click="reset()">
+                RESET
+            </li>
+        </ul>
+    </div>
     <span id="tables">
+        <table ng-repeat="row in liteGrid">
+            <tbody>
+                <tr>
+                    <td style="width:5px; border:none" ng-show="$even">
+                    </td>
+                    <td ng-repeat="col in row"
+                        ng-click="lightClick(col)"
+                        ng-class="[col.isLit?'lit':'', col.color, col.hover]"
+                        ng-mouseover="col.hover=settings.currentColor"
+                        ng-mouseleave="col.hover=''">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </span>
     <p>LITE BRITE</p>
     <script language="javascript" type="text/javascript" src="js/litebrite.js"></script>
