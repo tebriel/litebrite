@@ -24,13 +24,15 @@ $('li').click(function(){
 
 $('td').click(function light (){
   $(this).css('background', currentColor);
-  $(this).css('box-shadow', 'inset white 0 -1px 7px 1px');
-  $(this).attr('status', 'lit');
+  if(currentColor != 'black'){
+    $(this).css('box-shadow', 'inset white 0px -1px 7px 1px');
+    $(this).attr('status', 'lit');
+  }
 });
 
 function reset(){
   $('td').each(function(){
-    $(this).css('background','black');
+    $(this).css({background: 'black', boxShadow: ''});
     $(this).attr('status','');
   });
 };
