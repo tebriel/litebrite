@@ -11,7 +11,7 @@ $('table > tbody > tr').each(function(){
 });
 
 $('table:even').each(function(){
-  $(this).find('tbody').find('tr').prepend('<td style="width:5px, border:none"></td>');
+  $(this).find('tbody').find('tr').prepend('<td></td>');
 });
 
 $('li').each(function(){
@@ -34,6 +34,7 @@ function reset(){
   $('td').each(function(){
     $(this).css({background: 'black', boxShadow: ''});
     $(this).attr('status','');
+    currentColor = 'white';
   });
 };
 
