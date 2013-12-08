@@ -1,25 +1,23 @@
-COLORS = [
-    'black'
-    'blue'
-    'cyan'
-    'green'
-    'yellow'
-    'orange'
-    'red'
-    'purple'
-    'magenta'
-    'pink'
-    'white'
-]
-currentColor = COLORS[COLORS.length - 1]
-MAX_SIZE = 31
-
-
 class LiteCtrl
-    constructor: (@$scope, @settings) ->
+    COLORS = [
+        'black'
+        'blue'
+        'cyan'
+        'green'
+        'yellow'
+        'orange'
+        'red'
+        'purple'
+        'magenta'
+        'pink'
+        'white'
+    ]
+    MAX_SIZE = 31
+
+    constructor: (@$scope) ->
+        @$scope.currentColor = COLORS[COLORS.length - 1]
         @$scope.colors = COLORS
         @$scope.liteGrid = []
-        @$scope.settings = @settings
 
         @$scope.setColor = @setColor
         @$scope.reset = @reset
@@ -30,10 +28,6 @@ class LiteCtrl
             @$scope.liteGrid[row] = []
             for column in [0...MAX_SIZE]
                 @$scope.liteGrid[row][column] = @resetCell()
-
-        return
-    setColor: (color) =>
-        @settings.currentColor = color
 
         return
 
@@ -53,10 +47,10 @@ class LiteCtrl
         return
 
     lightClick: (cell) =>
-        if cell.color is @settings.currentColor
+        if cell.color is @$scope.currentColor
             cell.color = 'black'
         else
-            cell.color = @settings.currentColor
+            cell.color = @$scope.currentColor
 
         cell.isLit = cell.color isnt 'black'
 
@@ -64,5 +58,4 @@ class LiteCtrl
 
 litebriteApp = angular.module 'litebriteApp', []
 litebriteApp
-    .controller('LiteCtrl', ['$scope', 'settings', LiteCtrl])
-    .value('settings', currentColor:'white')
+    .controller('LiteCtrl', ['$scope', LiteCtrl])
