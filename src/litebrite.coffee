@@ -68,14 +68,28 @@ LiteBriteD3 = ->
                 .attr("width", "600px")
                 .attr("height", "600px")
                 .append("g")
+            radius = 8
+            size = 41
+            space = 0
+            xPosition = (d,i) ->
+                shiftWidth = 0
+                shifter = Math.floor(i/size) % 2
+                if shifter is 1
+                    shiftWidth = radius
+                result = (((i % 41)+1) * ((radius+space)*2)) + shiftWidth
+                console.log result
+                return result
+
+            yPosition = (d,i) ->
+                return ((Math.floor(i / 41)+1) * ((radius+space)*2)) + space
             grid.selectAll('circle')
                 .data(d3.merge scope.data)
                 .enter()
                 .append('circle')
-                .attr('cx', (d, i) -> ((i % 41) * 10) + 2)
-                .attr('cy', (d, i) -> (Math.floor(i / 41) * 10) + 2)
+                .attr('cx', xPosition)
+                .attr('cy', yPosition)
                 .attr('fill', 'blue')
-                .attr('r', "10px")
+                .attr('r', "#{radius}px")
 
 
             return
