@@ -23,7 +23,7 @@ $('li').click(function(){
 });
 
 $('td').click(function light (){
-  $(this).css('background', currentColor);
+  $(this).css({background: currentColor, boxShadow: ''});
   if(currentColor != 'black'){
     $(this).css('box-shadow', 'inset white 0px -1px 7px 1px');
     $(this).attr('status', 'lit');
