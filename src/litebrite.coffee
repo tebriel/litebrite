@@ -1,21 +1,22 @@
+COLORS = [
+    'black'
+    'blue'
+    'cyan'
+    'green'
+    'yellow'
+    'orange'
+    'red'
+    'purple'
+    'magenta'
+    'pink'
+    'white'
+]
 class LiteCtrl
-    COLORS = [
-        'black'
-        'blue'
-        'cyan'
-        'green'
-        'yellow'
-        'orange'
-        'red'
-        'purple'
-        'magenta'
-        'pink'
-        'white'
-    ]
     MAX_SIZE = 41
 
     constructor: (@$scope) ->
-        @$scope.currentColor = COLORS[COLORS.length - 1]
+        @$scope.settings =
+            currentColor: COLORS[COLORS.length - 1]
         @$scope.colors = COLORS
         @$scope.liteGrid = []
 
@@ -33,7 +34,7 @@ class LiteCtrl
 
     resetCell: (cell) ->
         cell ?= {}
-        cell.color = 'black'
+        cell.color = 'blue'
         cell.boxShadow = ''
         cell.isLit = false
 
@@ -47,10 +48,10 @@ class LiteCtrl
         return
 
     lightClick: (cell) =>
-        if cell.color is @$scope.currentColor
+        if cell.color is @$scope.settings.currentColor
             cell.color = 'black'
         else
-            cell.color = @$scope.currentColor
+            cell.color = @$scope.settings.currentColor
 
         cell.isLit = cell.color isnt 'black'
 
@@ -60,10 +61,13 @@ LiteBriteD3 = ->
     restrict: 'A'
     scope:
         data: "=lbData"
+        settings: "=lbSettings"
     link:
         post: (scope, iElement, iAttrs) ->
-            console.log d3.merge scope.data
-            console.log iElement
+            ourData = d3.merge scope.data
+            for data, i in ourData
+                data.index = i
+
             grid = d3.select(iElement[0])
                 .attr("width", "600px")
                 .attr("height", "600px")
@@ -71,25 +75,50 @@ LiteBriteD3 = ->
             radius = 8
             size = 41
             space = 0
-            xPosition = (d,i) ->
+
+            xPosition = (d) ->
                 shiftWidth = 0
-                shifter = Math.floor(i/size) % 2
+                shifter = Math.floor(d.index/size) % 2
                 if shifter is 1
                     shiftWidth = radius
-                result = (((i % 41)+1) * ((radius+space)*2)) + shiftWidth
-                console.log result
-                return result
+                return (((d.index % 41)+1) * ((radius+space)*2)) + shiftWidth
 
-            yPosition = (d,i) ->
-                return ((Math.floor(i / 41)+1) * ((radius+space)*2)) + space
-            grid.selectAll('circle')
-                .data(d3.merge scope.data)
-                .enter()
-                .append('circle')
-                .attr('cx', xPosition)
-                .attr('cy', yPosition)
-                .attr('fill', 'blue')
-                .attr('r', "#{radius}px")
+            yPosition = (d) ->
+                return ((Math.floor(d.index / 41)+1) * ((radius+space)*2)) + space
+            onMouseover = (d, i) ->
+                for color in COLORS
+                    showColor = color is scope.settings.currentColor
+                    d.elnt.classed color, showColor
+                return
+
+            onMouseleave = (d, i) ->
+                return
+
+
+            doDrawLiteBrite = ->
+                console.log 'ello, govener'
+                dataobj = grid.selectAll('circle')
+                    .data(ourData)
+                colorFunc = (d) ->
+                    console.log d.color
+                    return d.color
+                dataobj
+                    .enter()
+                    .append('circle')
+                    .attr('cx', xPosition)
+                    .attr('cy', yPosition)
+                    .attr('r', "#{radius}px")
+                    .on('mouseover', null)
+                    .on('mouseover', onMouseover)
+                    .on('mouseleave', onMouseleave)
+                    .each( (d) -> d.elnt = d3.select @)
+                    .classed('black',true)
+                dataobj
+                    .exit()
+                    .remove()
+
+            doDrawLiteBrite()
+
 
 
             return

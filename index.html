@@ -10,7 +10,7 @@
         <ul>
             <li class='legend'
                 ng-repeat="color in colors"
-                ng-click="$parent.currentColor = color"
+                ng-click="$parent.settings.currentColor = color"
                 ng-class="color">
             </li>
             <li class='reset'
@@ -35,7 +35,7 @@
             </tbody>
         </table>
     </span>-->
-    <svg litebrite lb-Data="liteGrid"></svg>
+    <svg litebrite lb-Data="liteGrid" lb-settings="settings"></svg>
     <p>LITE BRITE</p>
     <script language="javascript" type="text/javascript" src="js/litebrite.js"></script>
   </body>

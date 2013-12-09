@@ -57,17 +57,50 @@ li{
   border:1px dotted gray;
 }
 
-.black { background-color: black; }
-.blue { background-color: blue; }
-.cyan { background-color: cyan; }
-.green { background-color: green; }
-.yellow { background-color: yellow; }
-.orange { background-color: orange; }
-.red { background-color: red; }
-.purple { background-color: purple; }
-.magenta { background-color: magenta; }
-.pink { background-color: pink; }
-.white { background-color: white; }
+.black {
+  background-color: black;
+  fill: black;
+}
+.blue {
+  background-color: blue;
+  fill: blue;
+}
+.cyan {
+  background-color: cyan;
+  fill: cyan;
+}
+.green {
+  background-color: green;
+  fill: green;
+}
+.yellow {
+  background-color: yellow;
+  fill: yellow;
+}
+.orange {
+  background-color: orange;
+  fill: orange;
+}
+.red {
+  background-color: red;
+  fill: red;
+}
+.purple {
+  background-color: purple;
+  fill: purple;
+}
+.magenta {
+  background-color: magenta;
+  fill: magenta;
+}
+.pink {
+  background-color: pink;
+  fill: pink;
+}
+.white {
+  background-color: white;
+  fill: white;
+}
 
 .reset{
   color:white;
