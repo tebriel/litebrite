@@ -34,7 +34,7 @@ class LiteCtrl
 
     resetCell: (cell) ->
         cell ?= {}
-        cell.color = 'blue'
+        cell.color = 'black'
         cell.boxShadow = ''
         cell.isLit = false
 
@@ -44,6 +44,7 @@ class LiteCtrl
         for row in @$scope.liteGrid
             for cell in row
                 @resetCell cell
+        @$scope.$broadcast 'reset'
 
         return
 
@@ -74,7 +75,7 @@ LiteBriteD3 = ->
                 .append("g")
             radius = 8
             size = 41
-            space = 0
+            space = 1
 
             xPosition = (d) ->
                 shiftWidth = 0
@@ -89,11 +90,34 @@ LiteBriteD3 = ->
                 for color in COLORS
                     showColor = color is scope.settings.currentColor
                     d.elnt.classed color, showColor
+                d.elnt.classed 'hover', true
                 return
 
             onMouseleave = (d, i) ->
+                for color in COLORS
+                    showColor = color is d.color
+                    d.elnt.classed color, showColor
+                d.elnt.classed 'hover', false
                 return
 
+            onMouseClick = (d, i) ->
+                d.color = scope.settings.currentColor
+                for color in COLORS
+                    showColor = color is scope.settings.currentColor
+                    d.elnt.classed color, showColor
+
+                d.elnt.classed 'lit', d.color isnt 'black'
+
+                return
+
+            scope.$on 'reset', ->
+                for data in ourData
+                    # TODO: make default color variable
+                    continue if data.elnt.classed 'black'
+                    for color in COLORS
+                        data.elnt.classed color, data.color is color
+
+                return
 
             doDrawLiteBrite = ->
                 console.log 'ello, govener'
@@ -111,6 +135,7 @@ LiteBriteD3 = ->
                     .on('mouseover', null)
                     .on('mouseover', onMouseover)
                     .on('mouseleave', onMouseleave)
+                    .on('click', onMouseClick)
                     .each( (d) -> d.elnt = d3.select @)
                     .classed('black',true)
                 dataobj

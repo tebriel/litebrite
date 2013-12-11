@@ -60,6 +60,7 @@ li{
 .black {
   background-color: black;
   fill: black;
+  stroke: #303030;
 }
 .blue {
   background-color: blue;
@@ -112,8 +113,15 @@ p {
   color:white;
 }
 
+.hover {
+    stroke: #0188ab;
+    stroke-width: 1px;
+}
+
 .lit {
-    box-shadow: inset white 0px -1px 7px 1px;
+    /* box-shadow: inset white 0px -1px 7px 1px; */
+    /* stroke: green;
+    stroke-width: 2px; */
 }
 
 .lit:hover {
