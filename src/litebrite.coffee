@@ -69,11 +69,12 @@ LiteBriteD3 = ->
             for data, i in ourData
                 data.index = i
 
+            # TODO: Don't hardcode size
             grid = d3.select(iElement[0])
-                .attr("width", "600px")
-                .attr("height", "600px")
+                .attr("width", "729px")
+                .attr("height", "722px")
                 .append("g")
-            radius = 8
+            radius = 7
             size = 41
             space = 1
 
@@ -110,14 +111,12 @@ LiteBriteD3 = ->
 
                 return
 
-            scope.$on 'reset', ->
+            reset = ->
                 for data in ourData
-                    # TODO: make default color variable
                     continue if data.elnt.classed 'black'
                     for color in COLORS
                         data.elnt.classed color, data.color is color
-
-                return
+            scope.$on 'reset', reset
 
             doDrawLiteBrite = ->
                 console.log 'ello, govener'
